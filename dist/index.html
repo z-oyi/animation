@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./stats.js"></script>
+    <style>
+        #pause{
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin: 8px 0;
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="pause">暂停</button>
+    <script src="./bundle.js"></script>
+    <script>
+
+        let run = true
+        let btn = document.getElementById('pause')
+
+        
+        btn.addEventListener('click', () => btn.innerText = (run = !run) ? '暂停' : '继续')
+        let random = (min, max) => parseInt(Math.random()*(max-min+1)+min,10);
+        function createAn () {
+            let div = document.createElement('div')
+            div.className = 'div'
+            div.setAttribute('style', 'position: relative; width: 100px; height: 100px;')
+            let distance = window.innerWidth - 120
+            let maxRotate = 720
+            let minDistance = 0
+            let minRotate = 0
+            let minH = random(60, 160)
+            let maxH = random(260, 360)
+            
+            let cycle = 0
+            let startData = {x: minDistance, rotate: minRotate, h: minH}
+            let endData = {x: distance, rotate: maxRotate, h: maxH}
+            let options = {
+                duration: 2500,
+                delayTime: Math.ceil(Math.random() * 1000),
+                cycle: 0
+            }
+            let update = data => {
+                div.style.left = data.x + 'px'
+                div.style.transform = `rotate(${data.rotate}deg)`
+                div.style.background = 'hsl('+data.h+',50%,50%)';
+            }
+            update(startData)
+            document.body.appendChild(div)
+            let an = new OAnimation(startData, options)
+            .easing('easeOutBounce')
+            .to(endData)
+            .onUpdate(update)
+            .onCycleEnd(() => {
+                cycle++
+                let is = cycle % 2 === 0
+                an.startData({
+                    x: is ? minDistance : distance,
+                    rotate: is ? minRotate : maxRotate,
+                    h: cycle % 2 === 0 ? minH : maxH
+                })
+                an.to({
+                    x: is ? distance : minDistance,
+                    rotate: is ? maxRotate : minRotate,
+                    h: is ? maxH : minH
+                })
+            }).start()
+            let isRun = true
+            document.getElementById('pause').addEventListener('click', () => run ? an.play() : an.pause())
+        }
+        let length = 20
+        for (let i = 0; i < length; i++) {
+            createAn()
+        }
+    </script>
+
+    <script id="stats">
+        const stats = new Stats();
+        stats.dom.style.right="0px"
+        stats.dom.style.left=""
+
+        document.body.appendChild(stats.dom);
+        requestAnimationFrame(function loop(){
+            stats.update();requestAnimationFrame(loop)
+        });
+        [...document.getElementsByTagName('script')].forEach(el => el.remove())
+    </script>
+</body>
+</html>
