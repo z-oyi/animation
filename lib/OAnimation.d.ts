@@ -5,15 +5,14 @@ interface Options {
     duration?: number;
     delayTime?: number;
 }
+declare type eventCallback = null | ((data?: Record<string, number>, an?: OAnimation) => void);
 declare class OAnimation {
-    static oans: {
-        [key: string]: OAnimation;
-    };
-    static countOanLength: number;
-    static add(oan: OAnimation): void;
-    static remove(oan: OAnimation): void;
-    static start(time: number): void;
-    static update(time: number): void;
+    private static oans;
+    private static countOanLength;
+    private static add;
+    private static remove;
+    private static start;
+    private static update;
     static pause(): void;
     static Easing: typeof Easing;
     private id;
@@ -29,22 +28,14 @@ declare class OAnimation {
     private startTime;
     private isPause;
     private easingCallback;
-    private startEvent?;
-    private endEvent?;
-    private updateEvent?;
-    private cycleEndEvent?;
-    private cycleStartEvent?;
-    private pauseEvent?;
-    private stopEvent?;
-    private playEvent?;
-    /**
-     * 创建动画对象
-     * @param {Object} startObject
-     * @param {Object} options
-     * @param {String|Boolean} options.cycle 循环次数，0为无限循环，默认为1
-     * @param {Number} options.timeLength 动画时长
-     * @param {Number} options.delay 动画延迟时长
-     */
+    private startEvent;
+    private endEvent;
+    private updateEvent;
+    private cycleEndEvent;
+    private cycleStartEvent;
+    private pauseEvent;
+    private stopEvent;
+    private playEvent;
     constructor(startObject: Record<string, number>, options?: Options);
     /**
      * 返回id
@@ -84,40 +75,40 @@ declare class OAnimation {
      * @param {Function} startEventCallback 动画开始
      * @returns
      */
-    onStart(startEventCallback: Function): this;
+    onStart(startEventCallback: eventCallback): this;
     /**
      * 添加动画结束事件
      * @param {Function} endEventCallback 动画结束
      * @returns
      */
-    onEnd(endEventCallback: Function): this;
+    onEnd(endEventCallback: eventCallback): this;
     /**
      * 添加动画更新事件
      * @param {Function} updateEventCallback 动画更新
      * @returns
      */
-    onUpdaye(updateEventCallback: Function): this;
-    onCycleStart(cycleStartEventCallback: Function): this;
+    onUpdaye(updateEventCallback: eventCallback): this;
+    onCycleStart(cycleStartEventCallback: eventCallback): this;
     /**
      * 添加动画次数结束时事件
      * @param {Function} cycleEventCallback 动画第N次结束
      * @returns
      */
-    onCycleEnd(cycleEventCallback: Function): this;
+    onCycleEnd(cycleEventCallback: eventCallback): this;
     /**
      * 添加动画暂停时事件
      * @param {Function} pauseEventCallback 动画暂停
      * @returns
      */
-    onPause(pauseEventCallback: Function): this;
+    onPause(pauseEventCallback: eventCallback): this;
     /**
      * 添加动画停止时事件
      * @param {Function}} stopEventCallback 动画停止
      * @returns
      */
-    onStop(stopEventCallback: Function): this;
-    onPlay(playEventCallback: Function): this;
-    onUpdate(updateEventCallback: Function): this;
+    onStop(stopEventCallback: eventCallback): this;
+    onPlay(playEventCallback: eventCallback): this;
+    onUpdate(updateEventCallback: eventCallback): this;
 }
 export default OAnimation;
 //# sourceMappingURL=OAnimation.d.ts.map
