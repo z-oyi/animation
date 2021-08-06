@@ -4,6 +4,11 @@ import Easing from './Easing'
 type EasingCallback = string | ((x:number) => number)
 let nextId = 0
 let defaultEasingCallback = (progress:number) => progress
+interface Options {
+    cycle?: number,
+    duration?: number,
+    delayTime?: number,
+}
 class OAnimation {
 
     static oans:{[key: string]: OAnimation} = {};
@@ -72,19 +77,11 @@ class OAnimation {
      * @param {Number} options.timeLength 动画时长
      * @param {Number} options.delay 动画延迟时长
      */
-    constructor (startObject: Record<string, number>, {
-        cycle = 1,
-        duration = 3000,
-        delayTime = 0,
-    }: {
-        cycle?: number,
-        duration? : number,
-        delayTime? : number
-    }) {
+    constructor (startObject: Record<string, number>, options?:Options) {
         this.startDataCopy = {...startObject}
-        this.duration = duration
-        this.cycle = cycle
-        this.delayTime = delayTime
+        this.duration = options?.duration || 3000
+        this.cycle = options?.cycle || 1
+        this.delayTime = options?.delayTime || 0
         this.easingCallback = defaultEasingCallback
     }
 

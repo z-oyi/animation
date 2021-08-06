@@ -1,5 +1,10 @@
 import Easing from './Easing';
 declare type EasingCallback = string | ((x: number) => number);
+interface Options {
+    cycle?: number;
+    duration?: number;
+    delayTime?: number;
+}
 declare class OAnimation {
     static oans: {
         [key: string]: OAnimation;
@@ -40,11 +45,7 @@ declare class OAnimation {
      * @param {Number} options.timeLength 动画时长
      * @param {Number} options.delay 动画延迟时长
      */
-    constructor(startObject: Record<string, number>, { cycle, duration, delayTime, }: {
-        cycle?: number;
-        duration?: number;
-        delayTime?: number;
-    });
+    constructor(startObject: Record<string, number>, options?: Options);
     /**
      * 返回id
      * @returns {Number}

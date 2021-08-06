@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "node dev.js"
   },
-  "repository": "https://github.com/z-oyi/resize.git",
+  "repository": "git@github.com:z-oyi/animation.git",
   "keywords": [
     "animation",
     "oyi"

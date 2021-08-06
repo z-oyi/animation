@@ -36,12 +36,6 @@ const config = {
             file: packageJSON.module, // es6模块
             format: 'es',
             name: 'OAnimation'
-        },
-        {
-            file: 'dist/bundle.js',
-            format: 'umd',
-            name: 'OAnimation',
-            assetFileNames: "[name][extname]"
         }
     ],
     plugins: [
@@ -71,7 +65,7 @@ watcher.on('event', event => {
   
 
 browserSync.init({
-    server: "./dist",
-    files: ["dist/css/bundle.css", "dist/**/*.js", "dist/index.html"],
+    server: "./",
+    files: ["/lib/**/*.js", "/index.html"],
     open: false
 })
