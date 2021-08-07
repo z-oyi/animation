@@ -50,10 +50,10 @@ class OAnimation {
     private endDataCopy: Record<string, number> = {}
     private startDataCopy: Record<string, number> = {}
     private currentData: Record<string, number> = {}
-    private duration: number
+    private duration: number = 3000
     private playing: Boolean = false
-    private cycle: number
-    private delayTime: number
+    private cycle: number = 1
+    private delayTime: number = 0
     private countCycle: number = 0 //当前动画循环了几次
     private currentTime: number = 0 //当前动画执行到第几毫秒
     private startTime: number = 0 //动画开始时间
@@ -72,9 +72,11 @@ class OAnimation {
     constructor (startObject: Record<string, number>, options?:Options) {
         this.startDataCopy = {...startObject}
         this.duration = options?.duration || 3000
-        this.cycle = options?.cycle || 1
+        this.cycle = options?.cycle === undefined ? 1 : options?.cycle
         this.delayTime = options?.delayTime || 0
         this.easingCallback = defaultEasingCallback
+        console.log(this.duration)
+        console.log(this.cycle)
     }
 
     /**
